@@ -7,3 +7,5 @@ anydesk deb http://deb.anydesk.com/howto.html
 
 
 su
+
+sudo passwd linuxuser
