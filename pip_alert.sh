@@ -1,5 +1,13 @@
-a=$(python3 --version | awk '{print $2}')  # Python 버전 저장
-echo "Detected Python Version: $a"
+#!/bin/bash
 
-sudo rm -f /usr/lib/python${a%.*}/EXTERNALLY-MANAGED
-echo "Deleted /usr/lib/python${a%.*}/EXTERNALLY-MANAGED"
+versions=$(ls -d /usr/lib/python*/ 2>/dev/null | sed 's|/usr/lib/python||;s|/||' | sort -V)
+
+for version in $versions; do
+    file="/usr/lib/python${version}/EXTERNALLY-MANAGED"
+    if [[ -f "$file" ]]; then
+        sudo rm -f "$file"
+        echo "Deleted $file"
+    else
+        echo "File not found: $file"
+    fi
+done
